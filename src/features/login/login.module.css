@@ -1,0 +1,28 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    align-items: center;
+    height: 100lvh;
+
+}
+
+.form {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.form > * {
+    flex:1 0 100%;
+}
+
+.image {
+    width: 100%;
+}
+
+.imageContainer{
+    width: 600px;
+
+}
