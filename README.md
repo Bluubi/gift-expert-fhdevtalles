@@ -291,3 +291,42 @@ y se arreglará.
 
 Si lo tipas de la misma manera que tipaste en la parte anterior, se solucionará el problema.
 
+
+# Composition Pattern en React:
+
+
+````tsx
+        <LoginContext.Provider value={logged}>
+            <div className={styles.container}>
+                <FormProvider {...methods}>
+                    <div className={styles.w}>
+                        <img src={unsplash} alt={''} className={styles.image}/>
+                    </div>
+                    <form className={styles.form} onSubmit={handleSubmit((data) => { login(data)})}>
+                        <h1> Welcome to login page </h1>
+                        <ControlComponent name={'username'} type={'text'}>
+                            <label> Username </label>
+                        </ControlComponent>
+                        <ControlComponent name={'password'} type={'password'}>
+                            <label> Password </label>
+                        </ControlComponent>
+                        <button> Login </button>
+                    </form>
+                    <SnackbarErrorComponent ref={snackbar} />
+                </FormProvider>
+            </div>
+
+        </LoginContext.Provider>
+````
+
+Existe un patrón llamado **React Composition**
+
+> https://felixgerschau.com/react-component-composition/
+
+que pretende **componetizar** hasta el más mínimo detalle de React. En este caso,
+por ejemplo. tenemos un una estructura parecida a esta: 
+
+![Composition](./src/assets/docs/form-composition.png)
+
+Pero el código no termina de reflejarlo. Debemos agrupar cada ControlComponent en un componente
+llamado ``UsernameController``; y repetimos el proceso con el Password.

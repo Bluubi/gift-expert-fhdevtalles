@@ -1,6 +1,6 @@
 import './App.css'
 import {useContext} from "react";
-import {LoginContext} from "./features/login/login.page.tsx";
+import {LoginContext} from "./features/login/ui/login.page.tsx";
 
 function App() {
 

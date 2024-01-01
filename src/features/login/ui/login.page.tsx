@@ -1,10 +1,11 @@
 import {FieldValues, FormProvider, useForm} from "react-hook-form";
-import ControlComponent from "../../core/shared/form/control.component.tsx";
+import ControlComponent from "../../../../lib/form/control/control.component.tsx";
 import {createContext, useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {SnackbarErrorComponent} from "../../core/shared/snackbar-error/snackbar-error.component.tsx";
+import {SnackbarErrorComponent} from "../../../../lib/snackbar-error/snackbar-error.component.tsx";
 import styles from './login.module.css'
 import unsplash from '@alias/docs/salmen-bejaoui-beautiful-landscape.jpg'
+import UsernameController from "../../username-controller/ui/username-controller.component.tsx";
 
 export const LoginContext = createContext(false)
 
@@ -45,14 +46,12 @@ export default function LoginPage(){
         <LoginContext.Provider value={logged}>
             <div className={styles.container}>
                 <FormProvider {...methods}>
-                    <div className={styles.imageContainer}>
+                    <div className={styles.w}>
                         <img src={unsplash} alt={''} className={styles.image}/>
                     </div>
                     <form className={styles.form} onSubmit={handleSubmit((data) => { login(data)})}>
                         <h1> Welcome to login page </h1>
-                        <ControlComponent name={'username'} type={'text'}>
-                            <label> Username </label>
-                        </ControlComponent>
+                        <UsernameController />
                         <ControlComponent name={'password'} type={'password'}>
                             <label> Password </label>
                         </ControlComponent>
