@@ -1,0 +1,14 @@
+:root {
+    --primary: #0F2167;
+    --secondary: #3559E0;
+
+    --highlight: #3559E0;
+
+    --base: #FFECD6;
+
+    --family: sans-serif;
+}
+
+* {
+    font-family: var(--family);
+}
