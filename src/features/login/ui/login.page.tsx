@@ -1,10 +1,14 @@
 import {FieldValues, FormProvider, useForm} from "react-hook-form";
-import ControlComponent from "../../core/shared/form/control.component.tsx";
+import ControlComponent from "../../../../lib/form/control/control.component.tsx";
 import {createContext, useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {SnackbarErrorComponent} from "../../core/shared/snackbar-error/snackbar-error.component.tsx";
+import {SnackbarErrorComponent} from "../../../../lib/snackbar-error/snackbar-error.component.tsx";
 import styles from './login.module.css'
 import unsplash from '@alias/docs/salmen-bejaoui-beautiful-landscape.jpg'
+import UsernameController from "../../username-controller/ui/username-controller.component.tsx";
+import FormComponent from "../../../../lib/form/form.component.tsx";
+import PasswordController from "../../password-controller/password-controller.component.tsx";
+import FormTitleComponent from "../../../../lib/form/title/form-title.component.tsx";
 
 export const LoginContext = createContext(false)
 
@@ -48,16 +52,14 @@ export default function LoginPage(){
                     <div className={styles.imageContainer}>
                         <img src={unsplash} alt={''} className={styles.image}/>
                     </div>
-                    <form className={styles.form} onSubmit={handleSubmit((data) => { login(data)})}>
-                        <h1> Welcome to login page </h1>
-                        <ControlComponent name={'username'} type={'text'}>
-                            <label> Username </label>
-                        </ControlComponent>
-                        <ControlComponent name={'password'} type={'password'}>
-                            <label> Password </label>
-                        </ControlComponent>
+
+                    <FormComponent callback={(data: FieldValues) => login(data)}>
+                        <FormTitleComponent size={"1"} text={"Welcome to login"}></FormTitleComponent>
+                        <UsernameController />
+                        <PasswordController />
                         <button> Login </button>
-                    </form>
+                    </FormComponent>
+
                     <SnackbarErrorComponent ref={snackbar} />
                 </FormProvider>
             </div>

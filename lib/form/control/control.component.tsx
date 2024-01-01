@@ -1,5 +1,6 @@
 import {useFormContext} from "react-hook-form";
 import {ComponentProps} from "react";
+import styles from './control.module.css'
 
 type ControlField = {
     name: string,
@@ -11,7 +12,7 @@ export default function ControlComponent({name, type, ...props}: ControlField & 
     const { register } = useFormContext()
 
     return (
-        <div>
+        <div className={`${styles.flex} ${styles.fullWidth}`}>
             { props.children }
             <input {...register(name)} type={type}></input>
         </div>
