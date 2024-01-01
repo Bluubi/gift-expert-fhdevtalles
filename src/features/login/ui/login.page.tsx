@@ -1,5 +1,4 @@
 import {FieldValues, FormProvider, useForm} from "react-hook-form";
-import ControlComponent from "../../../../lib/form/control/control.component.tsx";
 import {createContext, useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {SnackbarErrorComponent} from "../../../../lib/snackbar-error/snackbar-error.component.tsx";
@@ -23,7 +22,6 @@ export default function LoginPage(){
     const [logged, setLogged] = useState(false);
     const snackbar = useRef<{display: (applyStyle: string) => void}>(null);
 
-    const { handleSubmit } = methods;
     const navigate = useNavigate();
 
     useEffect(() => {
