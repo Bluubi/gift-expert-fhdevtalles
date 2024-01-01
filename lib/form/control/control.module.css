@@ -1,0 +1,13 @@
+.fullWidth {
+    width: 100%;
+}
+
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex > * {
+    flex: 1 0 100%;
+}

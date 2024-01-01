@@ -6,6 +6,9 @@ import {SnackbarErrorComponent} from "../../../../lib/snackbar-error/snackbar-er
 import styles from './login.module.css'
 import unsplash from '@alias/docs/salmen-bejaoui-beautiful-landscape.jpg'
 import UsernameController from "../../username-controller/ui/username-controller.component.tsx";
+import FormComponent from "../../../../lib/form/form.component.tsx";
+import PasswordController from "../../password-controller/password-controller.component.tsx";
+import FormTitleComponent from "../../../../lib/form/title/form-title.component.tsx";
 
 export const LoginContext = createContext(false)
 
@@ -46,17 +49,17 @@ export default function LoginPage(){
         <LoginContext.Provider value={logged}>
             <div className={styles.container}>
                 <FormProvider {...methods}>
-                    <div className={styles.w}>
+                    <div className={styles.imageContainer}>
                         <img src={unsplash} alt={''} className={styles.image}/>
                     </div>
-                    <form className={styles.form} onSubmit={handleSubmit((data) => { login(data)})}>
-                        <h1> Welcome to login page </h1>
+
+                    <FormComponent callback={(data: FieldValues) => login(data)}>
+                        <FormTitleComponent size={"1"} text={"Welcome to login"}></FormTitleComponent>
                         <UsernameController />
-                        <ControlComponent name={'password'} type={'password'}>
-                            <label> Password </label>
-                        </ControlComponent>
+                        <PasswordController />
                         <button> Login </button>
-                    </form>
+                    </FormComponent>
+
                     <SnackbarErrorComponent ref={snackbar} />
                 </FormProvider>
             </div>

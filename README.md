@@ -329,4 +329,83 @@ por ejemplo. tenemos un una estructura parecida a esta:
 ![Composition](./src/assets/docs/form-composition.png)
 
 Pero el código no termina de reflejarlo. Debemos agrupar cada ControlComponent en un componente
-llamado ``UsernameController``; y repetimos el proceso con el Password.
+llamado ``UsernameController``; y repetiremos el proceso con el Password.
+
+Otro componente propenso a componetizar es el formulario. Sabemos que un formulario recibirá, sí o sí, los valores del
+formulario. Y que ese formulario está compuesto por controladores. Por tanto:
+
+````
+                    <form className={styles.form} onSubmit={handleSubmit((data) => { login(data)})}>
+                        <h1> Welcome to login page </h1>
+                        <UsernameController />
+                        <ControlComponent name={'password'} type={'password'}>
+                            <label> Password </label>
+                        </ControlComponent>
+                        <button> Login </button>
+                    </form>
+````
+
+Podemos crear un componente del ``form``:
+
+````
+<FormComponent callback={(data: FieldValues) => login(data)}>
+                        <h1> Welcome to login page </h1>
+                        <UsernameController />
+                        <ControlComponent name={'password'} type={'password'}>
+                            <label> Password </label>
+                        </ControlComponent>
+                        <button> Login </button>
+                    </FormComponent>
+````
+
+> Nota visualmente puede que no parezca que aporte nada, pero cuando tengamos que
+> incluir varios formularios con el mismo trato de valores, agradeceremos tener una base.
+
+Una vez aplicamos este patrón a los elementos, vemos cómo va quedando:
+
+```
+  <FormComponent callback={(data: FieldValues) => login(data)}>
+                        <h1> Welcome to login page </h1>
+                        <UsernameController />
+                        <PasswordController />
+                        <button> Login </button>
+                    </FormComponent>
+```
+
+Por supuesto que ```<h1> Welcome to login page``` vamos a componetizarlo:
+
+
+```
+type Size = '1' | '2' | '3' | '4' | '5' | '6';
+
+export default function FormTitleComponent({size, text}: {size: Size, text: string}) {
+    return createElementHighlight(size, text);
+
+}
+
+function createElementHighlight(size: Size, text: string){
+    switch(size){
+        case "1": return <h1>{text}</h1>
+        case "2": return <h2>{text}</h2>
+        case "3": return <h3>{text}</h3>
+        case "4": return <h4>{text}</h4>
+        case "5": return <h5>{text}</h5>
+        case "6": return <h6>{text}</h6>
+        default: return <h1>{text}</h1>
+
+    }
+}
+```
+
+Y lo reemplazamos:
+
+````
+<FormComponent callback={(data: FieldValues) => login(data)}>
+                        <FormTitleComponent size={"1"} text={"Welcome to login"}></FormTitleComponent>
+                        <UsernameController />
+                        <PasswordController />
+                        <button> Login </button>
+                    </FormComponent>
+````
+
+Queda visible las mejoras que nos aporta **Composition Pattern**

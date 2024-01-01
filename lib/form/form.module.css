@@ -1,0 +1,22 @@
+.form {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: relative;
+    padding: 1rem;
+}
+
+.form::before {
+    position: absolute;
+    content: '';
+
+    width: 200px;
+    height: 200px;
+
+    right: 0;
+    left: -126px;
+
+    border-bottom-left-radius: 50px;
+    border-top-left-radius: 50px;
+}

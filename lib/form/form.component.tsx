@@ -1,10 +1,14 @@
 import {FieldValues, useForm} from "react-hook-form";
+import styles from './form.module.css'
 import {ComponentProps} from "react";
-import styles from './login.module.css'
 
 // export const LoginContext = createContext(false)
 
-export default function LoginPage({callback, props}: { callback:(data: FieldValues) => void, props: ComponentProps<'form'>}) {
+type Callback = {
+    callback: (data: FieldValues) => void
+}
+
+export default function FormComponent({callback, ...props}:  Callback & ComponentProps<'form'>) {
 
     const methods = useForm();
 
@@ -13,6 +17,6 @@ export default function LoginPage({callback, props}: { callback:(data: FieldValu
     return (<form className={styles.form} onSubmit={handleSubmit((data) => {
         callback(data)
     })}>
-        { props.children}
+        { props.children }
     </form>)
 }
