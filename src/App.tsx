@@ -1,16 +1,23 @@
 import './App.css'
-import {useContext} from "react";
-import {LoginContext} from "./features/login/ui/login.page.tsx";
+import {createContext} from "react";
+import HeaderComponent from "./features/header/header.component.tsx";
 
-function App() {
+  const logged = localStorage.getItem('username') !== null;
+  const LoginContext = createContext(logged);
 
-  const logged  = useContext(LoginContext)
+  function App() {
+
 
   return (
     <div>
+        <HeaderComponent />
+        <LoginContext.Provider value={logged}>
       { logged ? 'Welcome user' : 'Welcome'}
+      <div> GiftExpert </div>
+        </LoginContext.Provider>
     </div>
   )
 }
 
 export default App
+export { LoginContext };

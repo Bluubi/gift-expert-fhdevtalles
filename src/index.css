@@ -15,3 +15,7 @@
     box-sizing: border-box;
     padding: 0;
 }
+
+html,body {
+    overflow-y: hidden
+}

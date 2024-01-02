@@ -1,16 +1,29 @@
-.container {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    align-items: center;
-    height: 100lvh;
-
-}
 
 .image {
     width: 100%;
 }
 
-.imageContainer {
+.form {
     display: flex;
-    height: 100lvh;
+    flex-wrap:wrap;
+
+    padding: 2rem;
+
+    background:white;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%,-50%);
+
+    border-radius: 4px;
+
+    width: 75%;
+    height:45%;
+}
+
+
+.buttonLogin {
+    flex: 1 0 100%;
+    margin-top: 1rem;
+    padding: 0.5rem;
 }

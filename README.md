@@ -291,6 +291,7 @@ y se arreglará.
 
 Si lo tipas de la misma manera que tipaste en la parte anterior, se solucionará el problema.
 
+> https://es.react.dev/reference/react/forwardRef
 
 # Composition Pattern en React:
 
@@ -344,6 +345,8 @@ formulario. Y que ese formulario está compuesto por controladores. Por tanto:
                         <button> Login </button>
                     </form>
 ````
+# DEPRECATED 
+-------------------------
 
 Podemos crear un componente del ``form``:
 
@@ -371,6 +374,8 @@ Una vez aplicamos este patrón a los elementos, vemos cómo va quedando:
                         <button> Login </button>
                     </FormComponent>
 ```
+
+-------------------------
 
 Por supuesto que ```<h1> Welcome to login page``` vamos a componetizarlo:
 
@@ -409,3 +414,20 @@ Y lo reemplazamos:
 ````
 
 Queda visible las mejoras que nos aporta **Composition Pattern**
+
+#useContext
+
+## Ten cuidado con el orden de los useContext
+
+Puede dársenos una situación como esta:
+
+![Composition](./src/assets/docs/logged-is-null.png)
+
+Esto lo que indica es que **hemos intentado acceder al contexto _antes_ de que se haya creado**.
+
+>
+> La llamada de useContext() en un componente no es afectada por los proveedores devueltos desde el mismo componente. 
+> El <Context.Provider> correspondiente necesita estar 
+> arriba del componente que hace la llamada de useContext().> 
+>
+> https://es.react.dev/reference/react/useContext

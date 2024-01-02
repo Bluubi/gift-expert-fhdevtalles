@@ -1,3 +1,16 @@
 .snackbar {
     display: none;
 }
+
+
+.snackbar {
+    position: absolute;
+    bottom: 0;
+    padding: 1rem;
+    width: 100%;
+    justify-content: center;
+    background: red;
+
+    font-weight: 600;
+    border: 4px solid red;
+}
