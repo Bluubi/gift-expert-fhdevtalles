@@ -36,24 +36,17 @@ export default function LoginPage(){
     }
 
     return (
-
-            <div className={styles.container}>
                 <FormProvider {...methods}>
                     <div className={styles.imageContainer}>
                         <img src={unsplash} alt={''} className={styles.image}/>
-                        <form onSubmit={handleSubmit((data) =>login(data))} className={styles.form}>
-                            <FormTitleComponent size={"1"} text={"Welcome to login"}></FormTitleComponent>
-                            <UsernameController />
-                            <PasswordController  />
-                            <button className={'buttonLogin'}> Login </button>
-                        </form>
                     </div>
-
-
-
+                    <form onSubmit={handleSubmit((data) =>login(data))} className={styles.form}>
+                        <FormTitleComponent size={"1"} text={"Login"}></FormTitleComponent>
+                        <UsernameController />
+                        <PasswordController  />
+                        <button className={ styles.buttonLogin}> Login </button>
+                    </form>
                     <SnackbarErrorComponent ref={snackbar} />
                 </FormProvider>
-            </div>
-
     )
 }
