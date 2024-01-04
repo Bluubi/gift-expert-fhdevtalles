@@ -27,11 +27,10 @@ function App() {
     return (
         <LoginContext.Provider value={logged}>
             <header className={styles.messageWelcome}>
-                <h1 className={styles.message}>{ logged ? 'Welcome user ' : 'Welcome '}</h1>
-                <h2 className={styles.to}> to  GiftExpert</h2>
+                <h1 className={styles.message}>{ logged ? 'Welcome user to  GiftExpert' : 'Welcome to  GiftExpert'}</h1>
             </header>
           <section className={styles.container}>
-            <p>Trending Gifs</p>
+            <h1 className={styles.trending}>Trending Gifs</h1>
               <Outlet />
               <section className={styles.linkPagination}>
                   { data?.map((_, index) => {

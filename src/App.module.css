@@ -2,6 +2,7 @@
     grid-column: 1/-1;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .linkPagination {
@@ -41,4 +42,8 @@ a {
 .pageActive {
     color: black;
     background:white;
+}
+
+.trending {
+    color: #f5007a;
 }
