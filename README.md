@@ -431,3 +431,138 @@ Esto lo que indica es que **hemos intentado acceder al contexto _antes_ de que s
 > arriba del componente que hace la llamada de useContext().> 
 >
 > https://es.react.dev/reference/react/useContext
+
+
+# Cosas que he aprendido
+
+## Crear un pagination
+
+Posiblemente la solución no sea la mejor, pero estoy orgullosa de haberlo sacado por mi cuenta.
+
+- Primero de todo necesitamos disponer del array de objetos que queremos paginar. 
+
+En esta aplicación se quería paginar todos los **trending gifs**, así que primero hacemos un fetch para obtener esa data:
+
+```typescript
+export const getTrendingGiphs = async (): Promise<Giph | undefined > =>  {
+    const response = await fetch('https://api.giphy.com/v1/gifs/trending?api_key=8pyHN7FvL8QLGvPP22arDUrB1LGfjV3T');
+    if(response.status === 200){
+        return await response.json() as Giph
+    }
+    return undefined;
+}
+```
+
+- Una vez tenemos los gifs, debemos planificar la paginación. En este caso queremos paginar los elementos de 
+5 en 5, por lo que necesitamos que la paginación sea así:
+
+página 1 => del 1 al 5
+
+página 2 => del 6 al 10
+
+página 3 => del 11 al 15...
+
+y así sucesivamente. Para marcar la página en la que estamos, primero debemos realizar un **map** sobre los elementos rescatados
+del fetch. Si vamos a mostrar los elementos de 5 en 5, entonces debemos dividir la longitud del array entre 5 para sacar el número correcto
+de páginas:
+
+
+````typescript jsx
+{ data?.map((_, index) => {
+              if(index > (data?.length/6)){ return; }
+                return <Link to={`page/${index}`} replace={true}> { index }</Link>
+            })}
+````
+En este caso, son 49 elementos. Si lo dividimos entre 5 (por el número de gifs que queremos mostrar), nos sale 9.8, y redondea hacia 10. El problema es que las páginas
+**9** y **10 no tienen imágenes** y darán error, por lo que debemos. El **10** porque en verdad son **8 páginas**, y el **9** porque hemos empezado a contar desde **cero** en lugar de desde **uno**.
+Así que hacemos **5 + 1** (para anular el 0) y ahora sí, nos salen 8 páginas y está correcto. Es decir, mientras el index sea **superior** a la longitud / 6, generaremos un link.
+
+Para mostrarlo en pantalla, utilizamos un **Outlet**:
+
+````typescript jsx
+ <div> GiftExpert </div>
+          <div className={styles.container}>
+            <p>Trending Gifs</p>
+              <Outlet />
+            { data?.map((_, index) => {
+                console.log(data);
+              if(index > (data?.length/ 6)){ return; }
+                return <Link to={`page/${index}`} replace={true}> { index }</Link>
+            })}
+          </div>
+
+````
+```typescript jsx
+export const routes = createBrowserRouter([
+    {path: '',
+    element:
+        <div className={styles.template}>
+            <Outlet />,
+        </div>,
+        children: [{
+            path: '',
+            element: <App />,
+            children: [
+                {
+                    path: 'page/:id',
+                    element: <PageComponent />,
+                    loader: async ({ params}): Promise<GiphModel[]> => {
+                        return Paginate(params);
+                    },
+                }
+            ]
+        },
+            ]
+    },
+])
+```
+
+Ahora tratemos la función ``paginate``:
+
+````typescript
+export async function Paginate(params: Params<string>){
+    const data = await getTrendingGiphs();
+    const giphsToShow = [];
+    const giphModelCreated = data?.data.map(g => toModel(g));
+
+    const id = Math.round(Number(params.id));
+    const init = id * 5;
+    const length = init + 5;
+    for(let i = init; i <= length; i++) {
+        giphsToShow.push(giphModelCreated![i])
+    }
+
+    return Promise.resolve(giphsToShow);
+}
+````
+
+Aquí hacemos varias cosas:
+1. Rescatar de nuevo la data fetching.
+2. Crear un array nuevo donde añadir los elementos que queremos mostrar.
+3. Crear las dos variables de ``init`` y de `length` para poder iterar bien. Obtenemos el parámetro
+del queryParam **id** (es decir, el **número de la página**) y lo multiplicamos * 5 (aquí sí debemos mantener el 5).
+4. Recorremos la distancia que hay entre el **init** y el **length** y cogemos el objeto utilizando el index de la iteración.
+
+
+# NavLink y su clase activa.
+
+En la documentación oficial: https://reactrouter.com/en/main/components/nav-link se dice que cuando un link está activo, puede funcionar esta ternaria:
+
+```typescript jsx
+<NavLink
+  to="/messages"
+  className={({ isActive, isPending }) =>
+    isPending ? "pending" : isActive ? "active" : ""
+  }
+>
+  Messages
+</NavLink>
+```
+
+Sin embargo, es importante tener en cuenta que **no funciona con clases globales**. Es decir, para que funcione correctamente debemos utilizar los **estilos importados del módulo**:
+
+```typescript jsx
+import styles from './App.module.css';
+
+<NavLink to={`page/${index}`} replace={true} className={({isActive}) => isActive ? styles.pageActive: "" }> { index }</NavLink>
+```

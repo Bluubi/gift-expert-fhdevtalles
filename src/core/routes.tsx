@@ -2,6 +2,9 @@ import {createBrowserRouter, Outlet} from "react-router-dom";
 import App from "../App.tsx";
 import LoginPage from "../features/login/ui/login.page.tsx";
 import styles from "./routes.module.css"
+import PageComponent from "../features/page/page.component.tsx";
+import {GiphModel} from "../features/giph/domain/giph-model.ts";
+import {Paginate} from "./utils.ts";
 
 export const routes = createBrowserRouter([
     {path: '',
@@ -11,12 +14,21 @@ export const routes = createBrowserRouter([
         </div>,
         children: [{
             path: '',
-            element: <App />
+            element: <App />,
+            children: [
+                {
+                    path: 'page/:id',
+                    element: <PageComponent />,
+                    loader: async ({ params}): Promise<GiphModel[]> => {
+                        return Paginate(params);
+                    },
+                }
+            ]
         },
             {
-                path:'/login',
+                path:'login',
                 element: <LoginPage />
-            }]
+            },
+            ]
     },
-
 ])
