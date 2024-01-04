@@ -38,7 +38,6 @@ function App() {
                       return <NavLink to={`page/${index}`} replace={true} className={({isActive}) => isActive ? styles.pageActive: "" }> { index }</NavLink>
                   })}
               </section>
-
           </section>
         </LoginContext.Provider>
     )

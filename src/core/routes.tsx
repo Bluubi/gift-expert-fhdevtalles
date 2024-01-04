@@ -1,6 +1,5 @@
 import {createBrowserRouter, Outlet} from "react-router-dom";
 import App from "../App.tsx";
-import LoginPage from "../features/login/ui/login.page.tsx";
 import styles from "./routes.module.css"
 import PageComponent from "../features/page/page.component.tsx";
 import {GiphModel} from "../features/giph/domain/giph-model.ts";
@@ -25,10 +24,6 @@ export const routes = createBrowserRouter([
                 }
             ]
         },
-            {
-                path:'login',
-                element: <LoginPage />
-            },
-            ]
+        ]
     },
 ])
