@@ -26,19 +26,21 @@ function App() {
 
     return (
         <LoginContext.Provider value={logged}>
-          { logged ? 'Welcome user' : 'Welcome'}
-          <div> GiftExpert </div>
-          <div className={styles.container}>
+            <header className={styles.messageWelcome}>
+                <h1 className={styles.message}>{ logged ? 'Welcome user ' : 'Welcome '}</h1>
+                <h2 className={styles.to}> to  GiftExpert</h2>
+            </header>
+          <section className={styles.container}>
             <p>Trending Gifs</p>
               <Outlet />
-              <div className={styles.linkPagination}>
+              <section className={styles.linkPagination}>
                   { data?.map((_, index) => {
                       if(index > (data?.length/ 6)){ return; }
                       return <NavLink to={`page/${index}`} replace={true} className={({isActive}) => isActive ? styles.pageActive: "" }> { index }</NavLink>
                   })}
-              </div>
+              </section>
 
-          </div>
+          </section>
         </LoginContext.Provider>
     )
 }
